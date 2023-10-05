@@ -22,12 +22,14 @@ const App = () => {
 
   const inputOperator = (e: React.MouseEvent) => {
     const button = e.target as HTMLElement;
-    if (justCalculated) {
-      setPrev(`${curr} ${button.textContent}`);
-      setCurr('');
-    } else {
-      setPrev(`${prev} ${curr} ${button.textContent}`);
-      setCurr('');
+    if (curr !== '') {
+      if (justCalculated) {
+        setPrev(`${curr} ${button.textContent}`);
+        setCurr('');
+      } else {
+        setPrev(`${prev} ${curr} ${button.textContent}`);
+        setCurr('');
+      }
     }
   };
 
@@ -58,6 +60,19 @@ const App = () => {
     }
   };
 
+  const equals = () => {
+    let expression:string;
+    if (justCalculated) {
+      expression = `${curr}`;
+    } else {
+      expression = `${prev} ${curr}`;
+    }
+    const calculator = new Calculator(expression);
+    if (curr !== '') {
+      calculator.calculate();
+    }
+  };
+
   class Calculator {
     expression: string;
 
@@ -84,6 +99,7 @@ const App = () => {
       const splitExpression = this.expression
         .split(' ')
         .filter((string) => string !== '');
+      console.log(splitExpression);
       while (splitExpression.length > 1) {
         if (splitExpression.indexOf('/') !== -1) {
           const operatorIndex = splitExpression.indexOf('/');
@@ -149,15 +165,7 @@ const App = () => {
         <button onClick={negateNum}>+/-</button>
         <button onClick={inputNum}>0</button>
         <button onClick={inputDecimal}>.</button>
-        <button
-          onClick={() => {
-            const expression = `${prev} ${curr}`;
-            const calculator = new Calculator(expression);
-            calculator.calculate();
-          }}
-        >
-          =
-        </button>
+        <button onClick={equals}>=</button>
       </div>
       <img
         className={`parentheses ${flash ? 'flash' : ''}`}
