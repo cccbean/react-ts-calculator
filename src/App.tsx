@@ -1,9 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import imageUrl from './assets/jumpscare.jpg';
 
 const App = () => {
   const [prev, setPrev] = useState('');
   const [curr, setCurr] = useState('');
   const [justCalculated, setJustCalculated] = useState(false);
+  const [flash, setFlash] = useState(false);
+
+  useEffect(() => {
+    if (flash) {
+      setTimeout(() => {
+        setFlash(false);
+      }, 200);
+    }
+  }, [flash]);
 
   const inputNum = (e: React.MouseEvent) => {
     const button = e.target as HTMLElement;
@@ -116,7 +126,13 @@ const App = () => {
       <div className="buttons">
         <button onClick={clearScreen}>C</button>
         <button onClick={delLastNum}>D</button>
-        <button onClick={() => setCurr('Go fuck yourself')}>()</button>
+        <button
+          onClick={() => {
+            setFlash(true);
+          }}
+        >
+          ()
+        </button>
         <button onClick={inputOperator}>/</button>
         <button onClick={inputNum}>7</button>
         <button onClick={inputNum}>8</button>
@@ -143,6 +159,11 @@ const App = () => {
           =
         </button>
       </div>
+      <img
+        className={`parentheses ${flash ? 'flash' : ''}`}
+        src={imageUrl}
+        alt=""
+      />
     </div>
   );
 };

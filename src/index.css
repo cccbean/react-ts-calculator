@@ -5,6 +5,7 @@
 }
 
 .calculator {
+  position: relative;
   height: 100vh;
   display: grid;
   grid-template: 1fr 3fr / 1fr;
@@ -33,4 +34,26 @@
 
 button {
   font-size: 6rem;
+  cursor: pointer;
+}
+
+.parentheses {
+  display: none;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+}
+
+.flash {
+  display: block;
+  animation: 0.25s forwards flash;
+}
+
+@keyframes flash {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
 }
