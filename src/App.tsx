@@ -5,16 +5,18 @@ const App = () => {
   const [curr, setCurr] = useState('');
   const [justCalculated, setJustCalculated] = useState(false);
 
-  const inputNum = (e) => {
-    setCurr(`${curr}${e.target.textContent}`);
+  const inputNum = (e: React.MouseEvent) => {
+    const button = e.target as HTMLElement;
+    setCurr(`${curr}${button.textContent}`);
   };
 
-  const inputOperator = (e) => {
+  const inputOperator = (e: React.MouseEvent) => {
+    const button = e.target as HTMLElement;
     if (justCalculated) {
-      setPrev(`${curr} ${e.target.textContent}`);
+      setPrev(`${curr} ${button.textContent}`);
       setCurr('');
     } else {
-      setPrev(`${prev} ${curr} ${e.target.textContent}`);
+      setPrev(`${prev} ${curr} ${button.textContent}`);
       setCurr('');
     }
   };
@@ -72,7 +74,6 @@ const App = () => {
       const splitExpression = this.expression
         .split(' ')
         .filter((string) => string !== '');
-      console.log(splitExpression);
       while (splitExpression.length > 1) {
         if (splitExpression.indexOf('/') !== -1) {
           const operatorIndex = splitExpression.indexOf('/');
